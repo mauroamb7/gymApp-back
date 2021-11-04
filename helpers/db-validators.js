@@ -5,6 +5,7 @@ const User = require("../models/usuario");
 const rolValido = async (rol = "") => {
   const existeRol = await Rol.findOne({ rol });
   if (!existeRol) {
+    console.log(existeRol);
     throw new Error(`El rol ${rol} no existe en base de datos`);
   }
 };

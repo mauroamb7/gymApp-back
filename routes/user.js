@@ -14,7 +14,7 @@ const {
   existeDni,
 } = require("../helpers/db-validators");
 
-const { respErrors, validarJWT, adminRole } = require("../middlewares/index");
+const { respErrors, validarJWT, isAdmin } = require("../middlewares/index");
 
 const router = Router();
 
@@ -32,11 +32,11 @@ router.post(
     ).isLength({ min: 6 }),
     check("email", "El email no es valido").isEmail(),
     check("email").custom(existeEmail),
-    check("dni", "Dni obligatorio").isLength({ min: 8, max: 8 }),
+    check("dni", "Dni obligatorio").notEmpty(),
     check("dni").custom(existeDni),
 
     // check('rol', 'No es un rol válido').isIn(['ADMIN_ROL', 'USER_ROL'])
-    check("rol").custom(rolValido),
+    // check("rol").custom(rolValido),
 
     //Respuesta en caso de haber errores
     respErrors,
@@ -62,7 +62,7 @@ router.delete(
   "/:id",
   [
     validarJWT,
-    adminRole,
+    isAdmin,
     check("id", "formato de id incorrecto").isMongoId(),
     check("id").custom(existeId),
     //Respuesta en caso de haber errores

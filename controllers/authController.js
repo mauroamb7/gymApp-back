@@ -1,5 +1,6 @@
 const { request, response } = require("express");
 const bcryptjs = require("bcryptjs");
+
 const Usuario = require("../models/usuario");
 const { generarJWT } = require("../helpers/generar-jwt");
 
@@ -7,8 +8,9 @@ const loginController = async (req = request, res = response) => {
   const { email, password } = req.body;
 
   try {
-    //Verificar si existe email
-    const usuario = await Usuario.findOne({ email });
+    //Verificar si existe email - en el populate traemos el campo rol de la tabla rol
+    const usuario = await Usuario.findOne({ email }).populate("rol", "nombre");
+
     if (!usuario) {
       return res.status(400).json({
         msg: "Usuario o contraseña incorrectos",
@@ -34,24 +36,43 @@ const loginController = async (req = request, res = response) => {
     const token = await generarJWT(usuario.id);
 
     res.json({
-      usuario,
+      ok: true,
+      nombre: usuario.nombre,
+      email: usuario.email,
+      uid: usuario.id,
+      rol: usuario.rol,
       token,
     });
   } catch (error) {
     console.log(error);
     res.status(500).json({
+      ok: false,
       msg: "Algo salió mal",
     });
   }
 };
 
-const logoutController = (req, res) => {
-  req.logout();
-  req.session.destroy();
-  res.redirect("/");
+const revalidarToken = async (req, res = response) => {
+  const { uid } = req.usuario.id;
+
+  // Generar el JWT
+  const token = await generarJWT(uid);
+
+  return res.json({
+    ok: true,
+    uid,
+    token,
+  });
 };
+
+// const logoutController = (req, res) => {
+//   req.logout();
+//   req.session.destroy();
+//   res.redirect("/");
+// };
 
 module.exports = {
   loginController,
-  logoutController,
+  // logoutController,
+  revalidarToken,
 };

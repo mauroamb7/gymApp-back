@@ -1,6 +1,7 @@
 const { response, request } = require("express");
 const bcryptjs = require("bcryptjs");
 const User = require("../models/usuario");
+const Rol = require("../models/rol");
 
 //GET - Listar todos los usuarios
 const userGet = async (req = request, res = response) => {
@@ -13,7 +14,8 @@ const userGet = async (req = request, res = response) => {
       User.countDocuments(conditions),
       User.find(conditions)
         .skip(Number(page) - 1)
-        .limit(Number(limit)),
+        .limit(Number(limit))
+        .populate("rol", "nombre"),
     ]);
 
     res.json({
@@ -35,14 +37,23 @@ const userPost = async (req, res = response) => {
   const salt = bcryptjs.genSaltSync();
   user.password = bcryptjs.hashSync(password, salt);
 
+  //Guardar id del modelo Rol, si no se asigna "USER_ROLE" por defecto
+  if (rol) {
+    const foundRols = await Rol.find({ rol: { $in: rol } });
+    user.rol = foundRols.map((role) => role._id);
+  } else {
+    const role = await Rol.findOne({ nombre: "USER_ROLE" });
+    user.rol = [role._id];
+  }
+
   // Crear usuario
   try {
-    const userDB = await user.save();
+    const userSaved = await user.save();
 
-    if (userDB) {
+    if (userSaved) {
       res.status(201).json({
         msg: "post API - Usuario creado con exito!",
-        userDB,
+        userSaved,
       });
     }
   } catch (error) {
@@ -62,7 +73,7 @@ const userPut = async (req, res = response) => {
     resto.password = bcryptjs.hashSync(password, salt);
   }
 
-  const usuario = await User.findByIdAndUpdate(id, resto);
+  const usuario = await User.findByIdAndUpdate(id, resto).populate("rol");
 
   res.status(400).json({
     msg: "Usuario actualizado correctamente!",
@@ -75,13 +86,15 @@ const userDelete = async (req, res = response) => {
   const { id } = req.params;
 
   try {
-    const usuario = await User.findByIdAndUpdate(id, { estado: false });
+    const usuario = await User.findByIdAndUpdate(id, {
+      estado: false,
+    }).populate("rol");
 
     //Usuario autenticado
     //const usuarioAutenticado = req.usuario;
 
     res.json({
-      msg: `el usuario ${usuario.nombre} se ha eliminado correctamente!`,
+      msg: `el usuario '${usuario.nombre} ${usuario.apellido}' se ha eliminado correctamente!`,
       usuario,
     });
   } catch (error) {
