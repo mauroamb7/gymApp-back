@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
 
-const generarJWT = (uid = "") => {
+const generarJWT = (uid = "", rols) => {
   //Lo retornamos como promesa para usar el Await
   return new Promise((resolve, reject) => {
-    const payload = { uid };
+    const payload = { uid, rols };
 
     jwt.sign(
       payload,

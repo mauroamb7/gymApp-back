@@ -15,7 +15,7 @@ const validarJWT = async (req, res = response, next) => {
     const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
 
     //Leer usuario correspondiente al uid
-    const usuario = await Usuario.findById(uid);
+    const usuario = await Usuario.findById(uid).populate("rol");
     if (!usuario) {
       return res.status(401).json({
         msg: "Token no válido",
