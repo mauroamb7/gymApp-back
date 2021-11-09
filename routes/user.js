@@ -1,11 +1,11 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
 const {
-  userGet,
-  userPost,
+  userList,
+  userCreate,
   userDelete,
   userPatch,
-  userPut,
+  userUpdate,
 } = require("../controllers/userController");
 const {
   rolValido,
@@ -18,7 +18,7 @@ const { respErrors, validarJWT, isAdmin } = require("../middlewares/index");
 
 const router = Router();
 
-router.get("/", userGet);
+router.get("/", userList);
 
 //POST - Crear usuario
 router.post(
@@ -41,7 +41,7 @@ router.post(
     //Respuesta en caso de haber errores
     respErrors,
   ],
-  userPost
+  userCreate
 );
 
 // Actualizar usuario
@@ -54,7 +54,7 @@ router.put(
     //Respuesta en caso de haber errores
     respErrors,
   ],
-  userPut
+  userUpdate
 );
 
 // Borrar usuario

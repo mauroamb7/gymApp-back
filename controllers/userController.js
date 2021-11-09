@@ -4,7 +4,7 @@ const User = require("../models/usuario");
 const Rol = require("../models/rol");
 
 //GET - Listar todos los usuarios
-const userGet = async (req = request, res = response) => {
+const userList = async (req = request, res = response) => {
   const { page = 1, limit = 5 } = req.query;
   const conditions = { estado: true };
 
@@ -28,9 +28,9 @@ const userGet = async (req = request, res = response) => {
 };
 
 //POST - Crear usuario
-const userPost = async (req, res = response) => {
+const userCreate = async (req, res = response) => {
   //Instancia User con datos del body
-  const { nombre, apellido, email, password, rol, dni } = req.body;
+  const { nombre, apellido, email, password, dni, rol } = req.body;
   const user = new User({ nombre, apellido, email, password, rol, dni });
 
   // Encriptar password
@@ -52,6 +52,7 @@ const userPost = async (req, res = response) => {
 
     if (userSaved) {
       res.status(201).json({
+        ok: true,
         msg: "post API - Usuario creado con exito!",
         userSaved,
       });
@@ -63,7 +64,7 @@ const userPost = async (req, res = response) => {
 };
 
 // Actualizar usuario
-const userPut = async (req, res = response) => {
+const userUpdate = async (req, res = response) => {
   const id = req.params.id;
   const { _id, password, email, google, ...resto } = req.body;
 
@@ -108,4 +109,4 @@ const userPatch = (req, res = response) => {
   });
 };
 
-module.exports = { userGet, userPost, userDelete, userPatch, userPut };
+module.exports = { userList, userCreate, userDelete, userPatch, userUpdate };
