@@ -6,6 +6,7 @@ const {
   userDelete,
   userPatch,
   userUpdate,
+  clientesList,
 } = require("../controllers/userController");
 const {
   rolValido,
@@ -18,7 +19,11 @@ const { respErrors, validarJWT, isAdmin } = require("../middlewares/index");
 
 const router = Router();
 
+//Listar todos los usuarios
 router.get("/", userList);
+
+// List users with rol USER_ROLE
+router.get("/clientes", clientesList);
 
 //POST - Crear usuario
 router.post(

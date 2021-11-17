@@ -109,4 +109,43 @@ const userPatch = (req, res = response) => {
   });
 };
 
-module.exports = { userList, userCreate, userDelete, userPatch, userUpdate };
+//Listar clientes con rol USER_ROLE
+const clientesList = async (req = request, res = response) => {
+  const { page = 1, limit = 5 } = req.query;
+  const conditions = {
+    // estado: true,
+    rol: { $in: ["60d267703ff11921983066b8"] },
+  };
+
+  try {
+    // Cuenta clientes con 'estado: true' y devuelve todos los usuarios con el 'estado' = true y rol = 'USER_ROLE' pasando su id
+    const [usuarios, total] = await Promise.all([
+      //usuarios
+      User.find(conditions)
+        .skip(Number(page) - 1)
+        .limit(Number(limit))
+        .populate("rol"),
+      //total
+      User.countDocuments({
+        rol: { $in: ["60d267703ff11921983066b8"] },
+        estado: true,
+      }),
+    ]);
+
+    res.json({
+      total,
+      usuarios,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports = {
+  userList,
+  userCreate,
+  userDelete,
+  userPatch,
+  userUpdate,
+  clientesList,
+};
