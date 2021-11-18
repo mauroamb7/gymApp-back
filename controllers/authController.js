@@ -8,8 +8,12 @@ const loginController = async (req = request, res = response) => {
   const { email, password } = req.body;
 
   try {
+    const emailLower = email.toLowerCase();
     //Verificar si existe email - en el populate traemos el campo rol de la tabla rol
-    const usuario = await Usuario.findOne({ email }).populate("rol", "nombre");
+    const usuario = await Usuario.findOne({ email: emailLower }).populate(
+      "rol",
+      "nombre"
+    );
 
     if (!usuario) {
       return res.status(400).json({
@@ -17,7 +21,7 @@ const loginController = async (req = request, res = response) => {
       });
     }
 
-    //Verificar si usuario esta activo (estado === true)
+    //Verificar si usuario esta activo
     if (!usuario.estado) {
       return res.status(400).json({
         msg: "Usuario o contraseña incorrectos",

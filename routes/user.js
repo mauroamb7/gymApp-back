@@ -4,7 +4,7 @@ const {
   userList,
   userCreate,
   userDelete,
-  userPatch,
+  //userPatch,
   userUpdate,
   clientesList,
 } = require("../controllers/userController");
@@ -76,6 +76,6 @@ router.delete(
   userDelete
 );
 
-router.patch("/", userPatch);
+//router.patch("/", userPatch);
 
 module.exports = router;

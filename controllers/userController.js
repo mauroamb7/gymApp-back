@@ -29,9 +29,18 @@ const userList = async (req = request, res = response) => {
 
 //POST - Crear usuario
 const userCreate = async (req, res = response) => {
-  //Instancia User con datos del body
   const { nombre, apellido, email, password, dni, rol } = req.body;
-  const user = new User({ nombre, apellido, email, password, rol, dni });
+  const emailLower = email.toLowerCase();
+
+  //Instancia User con datos del body
+  const user = new User({
+    nombre,
+    apellido,
+    email: emailLower,
+    password,
+    rol,
+    dni,
+  });
 
   // Encriptar password
   const salt = bcryptjs.genSaltSync();
@@ -103,11 +112,11 @@ const userDelete = async (req, res = response) => {
   }
 };
 
-const userPatch = (req, res = response) => {
-  res.json({
-    msg: "patch API",
-  });
-};
+// const userPatch = (req, res = response) => {
+//   res.json({
+//     msg: "patch API",
+//   });
+// };
 
 //Listar clientes con rol USER_ROLE
 const clientesList = async (req = request, res = response) => {
@@ -145,7 +154,7 @@ module.exports = {
   userList,
   userCreate,
   userDelete,
-  userPatch,
+  // userPatch,
   userUpdate,
   clientesList,
 };
