@@ -112,12 +112,6 @@ const userDelete = async (req, res = response) => {
   }
 };
 
-// const userPatch = (req, res = response) => {
-//   res.json({
-//     msg: "patch API",
-//   });
-// };
-
 //Listar clientes con rol USER_ROLE
 const clientesList = async (req = request, res = response) => {
   const { page = 1, limit = 5 } = req.query;
@@ -150,11 +144,34 @@ const clientesList = async (req = request, res = response) => {
   }
 };
 
+// Get user by Id
+const getUserById = async (req, res) => {
+  const uid = req.params.id;
+
+  try {
+    const user = await User.findById(uid);
+
+    if (!user) {
+      return res.status(500).json({
+        ok: false,
+        msg: "No se encontró usuario",
+      });
+    }
+
+    return res.status(200).json({
+      ok: true,
+      user,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   userList,
   userCreate,
   userDelete,
-  // userPatch,
   userUpdate,
   clientesList,
+  getUserById,
 };
