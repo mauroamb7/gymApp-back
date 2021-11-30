@@ -7,6 +7,7 @@ const {
   userUpdate,
   clientesList,
   getUserById,
+  userAlta,
 } = require("../controllers/userController");
 const {
   rolValido,
@@ -77,6 +78,20 @@ router.delete(
     respErrors,
   ],
   userDelete
+);
+
+//Dar de alta
+router.patch(
+  "/:id",
+  [
+    validarJWT,
+    isAdmin,
+    check("id", "formato de id incorrecto").isMongoId(),
+    check("id").custom(existeId),
+    //Respuesta en caso de haber errores
+    respErrors,
+  ],
+  userAlta
 );
 
 //router.patch("/", userPatch);

@@ -85,7 +85,8 @@ const userUpdate = async (req, res = response) => {
 
   const usuario = await User.findByIdAndUpdate(id, resto).populate("rol");
 
-  res.status(400).json({
+  res.status(200).json({
+    ok: true,
     msg: "Usuario actualizado correctamente!",
     usuario,
   });
@@ -98,18 +99,35 @@ const userDelete = async (req, res = response) => {
   try {
     const usuario = await User.findByIdAndUpdate(id, {
       estado: false,
-    }).populate("rol");
+    });
 
     //Usuario autenticado
     //const usuarioAutenticado = req.usuario;
 
-    res.json({
+    res.status(200).json({
+      ok: true,
       msg: `el usuario '${usuario.nombre} ${usuario.apellido}' se ha eliminado correctamente!`,
       usuario,
     });
   } catch (error) {
     console.log(error);
   }
+};
+
+//Dar de alta estado=true
+userAlta = async (req, res) => {
+  const { id } = req.params;
+  const { estado } = req.body;
+
+  try {
+    const usuario = await User.findByIdAndUpdate(id, { estado });
+
+    res.status(200).json({
+      ok: true,
+      msg: `el usuario '${usuario.nombre} ${usuario.apellido}' se ha renovado correctamente!`,
+      usuario,
+    });
+  } catch (error) {}
 };
 
 //Listar clientes con rol USER_ROLE
@@ -174,4 +192,5 @@ module.exports = {
   userUpdate,
   clientesList,
   getUserById,
+  userAlta,
 };
