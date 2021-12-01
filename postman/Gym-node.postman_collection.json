@@ -6,130 +6,324 @@
 	},
 	"item": [
 		{
-			"name": "Crear Usuario",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"nombre\": \"usuario\",\r\n    \"apellido\": \"de prueba\",\r\n    \"email\": \"prueba@gmail.com\",\r\n    \"password\" : \"123456\",\r\n    \"dni\" : 12345674 \r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"email\": \"carp23j@gmail.com\",\r\n     \"password\" : \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{url}}/api/user",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"api",
-						"user"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Actualizar Usuario",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"nombre\": \"test 2 edit\",\r\n    \"apellido\": \"editado\",\r\n    \"email\": \"testeditado@test.com\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "Renovar token",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MTg0NWY5MjAwZDJlN2RmMDAyZTllYTAiLCJyb2xzIjpbeyJfaWQiOiI2MGQyNjc3MDNmZjExOTIxOTgzMDY2YjciLCJub21icmUiOiJBRE1JTl9ST0xFIn1dLCJpYXQiOjE2MzYxMzg0NzQsImV4cCI6MTYzNjMxMTI3NH0.tbLtAe3gxwI--Uy-fqsDAEwqBJfVpIX-NjQ2onQuI9I",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/auth/renew",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"renew"
+							]
 						}
-					}
-				},
-				"url": {
-					"raw": "{{url}}/api/user/618463d7c7552b8b892937cc",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"api",
-						"user",
-						"618463d7c7552b8b892937cc"
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Listar usuarios",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/api/user",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"api",
-						"user"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Borrar usuario",
-			"request": {
-				"method": "DELETE",
-				"header": [
-					{
-						"key": "x-token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MTg0NWY5MjAwZDJlN2RmMDAyZTllYTAiLCJpYXQiOjE2MzYwNjcyMzksImV4cCI6MTYzNjI0MDAzOX0._6Ma5vwZi79mZQKMelma6_jpZ8nHVuQ-xIXCfwd0w3I",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "{{url}}/api/user/6183189b839c7dc53fe85945",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"api",
-						"user",
-						"6183189b839c7dc53fe85945"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Login",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n     \"email\": \"carp23j@gmail.com\",\r\n     \"password\" : \"123456\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "user routes",
+			"item": [
+				{
+					"name": "Crear Usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"usuario\",\r\n    \"apellido\": \"de prueba\",\r\n    \"email\": \"prueba@gmail.com\",\r\n    \"password\" : \"123456\",\r\n    \"dni\" : 12345674 \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{url}}/api/auth/login",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"api",
-						"auth",
-						"login"
-					]
+				{
+					"name": "Actualizar Usuario",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"test 2 edit\",\r\n    \"apellido\": \"editado\",\r\n    \"email\": \"testeditado@test.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/618463d7c7552b8b892937cc",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"618463d7c7552b8b892937cc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar usuarios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/user",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar usuario",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MTg0NWY5MjAwZDJlN2RmMDAyZTllYTAiLCJpYXQiOjE2MzYwNjcyMzksImV4cCI6MTYzNjI0MDAzOX0._6Ma5vwZi79mZQKMelma6_jpZ8nHVuQ-xIXCfwd0w3I",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/user/6183189b839c7dc53fe85945",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"6183189b839c7dc53fe85945"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar clientes USER_ROLE",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/user/clientes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MTg0NWY5MjAwZDJlN2RmMDAyZTllYTAiLCJyb2xzIjpbeyJfaWQiOiI2MGQyNjc3MDNmZjExOTIxOTgzMDY2YjciLCJub21icmUiOiJBRE1JTl9ST0xFIn1dLCJpYXQiOjE2Mzc3MDY3NzcsImV4cCI6MTYzNzg3OTU3N30.e60tCEStj6ZoyBe7jzn6nEe8ovKpM0Onnnc7Yd99vyw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/user/61947a50e9be5006ebd41e3d",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"61947a50e9be5006ebd41e3d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alta usuario",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "x-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MTg0NWY5MjAwZDJlN2RmMDAyZTllYTAiLCJyb2xzIjpbeyJfaWQiOiI2MGQyNjc3MDNmZjExOTIxOTgzMDY2YjciLCJub21icmUiOiJBRE1JTl9ST0xFIn1dLCJpYXQiOjE2Mzc5Njk2NjgsImV4cCI6MTYzODE0MjQ2OH0.BczAZ4O6xjEVZKgRfaEoXZqOkwgHclfxTWIbey1B120",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/user/61947a50e9be5006ebd41e3a",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"61947a50e9be5006ebd41e3a"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
+		},
+		{
+			"name": "valorCuota routes",
+			"item": [
+				{
+					"name": "Listar valores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/valorCuota",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"valorCuota"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear valor de cuota",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-token",
+								"value": "inserttoken",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"valor\": 1400,\r\n    \"descripcion\": \"Solamente aparatos\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/valorCuota",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"valorCuota"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar valor de cuota",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-token",
+								"value": "insertoken",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/valorCuota/61a7fc5ba1bb6e5a1a2d7014",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"valorCuota",
+								"61a7fc5ba1bb6e5a1a2d7014"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

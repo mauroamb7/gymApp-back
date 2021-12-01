@@ -94,6 +94,4 @@ router.patch(
   userAlta
 );
 
-//router.patch("/", userPatch);
-
 module.exports = router;
