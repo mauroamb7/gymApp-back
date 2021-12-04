@@ -4,7 +4,7 @@ const ValorCuota = require("../models/valorCuota");
 
 //Nuevo valor
 const agregarValor = async (req = request, res = response) => {
-  const { valor, descripcion } = req.body;
+  const { valor, descripcion, actividad } = req.body;
 
   if (!valor || valor < 0) {
     res.status(400).json({
@@ -18,6 +18,7 @@ const agregarValor = async (req = request, res = response) => {
   const valorCreate = new ValorCuota({
     valor,
     descripcion: descripcionLower,
+    actividad,
   });
 
   try {

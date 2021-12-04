@@ -12,6 +12,7 @@ class Server {
     this.authPath = "/api/auth";
     this.usersPath = "/api/user";
     this.valorCuotaPath = "/api/valorCuota";
+    this.actividad = "/api/actividad";
 
     //DB connection
     this.database();
@@ -43,6 +44,7 @@ class Server {
     this.app.use(this.authPath, require("../routes/auth"));
     this.app.use(this.usersPath, require("../routes/user"));
     this.app.use(this.valorCuotaPath, require("../routes/valorCuotaRoute"));
+    this.app.use(this.actividad, require("../routes/actividadRoute"));
   }
 
   async database() {

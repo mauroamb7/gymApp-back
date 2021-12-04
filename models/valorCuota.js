@@ -8,6 +8,10 @@ const valorCuotaSchema = new Schema({
   descripcion: {
     type: String,
   },
+  actividad: {
+    type: Schema.Types.ObjectId,
+    ref: "Actividad",
+  },
 });
 
 valorCuotaSchema.methods.toJSON = function () {
