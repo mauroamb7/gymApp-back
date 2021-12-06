@@ -1,6 +1,6 @@
 const { response, request } = require("express");
 
-const ValorCuota = require("../models/valorCuota");
+const { ValorCuota, Actividad } = require("../models");
 
 //Nuevo valor
 const agregarValor = async (req = request, res = response) => {
@@ -15,31 +15,40 @@ const agregarValor = async (req = request, res = response) => {
 
   const descripcionLower = descripcion.toLowerCase();
 
+  //Buscamos actividad en base de datos y validamos si existe
+  const actividadDB = await Actividad.findOne({ nombre: actividad });
+
+  if (!actividadDB) {
+    res.status(400).json({
+      ok: false,
+      msg: "no existe actividad",
+    });
+  }
+
   const valorCreate = new ValorCuota({
     valor,
     descripcion: descripcionLower,
-    actividad,
+    actividad: actividadDB._id,
   });
 
   try {
     const valorSaved = await valorCreate.save();
 
-    if (valorSaved) {
-      res.status(200).json({
-        ok: true,
-        msg: "Valor de cuota creado!",
-        valorSaved,
-      });
-    }
+    res.status(200).json({
+      ok: true,
+      msg: "Valor de cuota creado!",
+      valorSaved,
+    });
   } catch (error) {
     console.log(error);
     throw new Error("No se pudo guardar de base de datos");
   }
 };
 
+//Listar valores
 const listarValor = async (req = request, res = response) => {
   try {
-    const valorList = await ValorCuota.find({});
+    const valorList = await ValorCuota.find({}).populate("actividad", "nombre");
 
     if (!valorList) {
       res.json({

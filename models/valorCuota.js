@@ -15,7 +15,7 @@ const valorCuotaSchema = new Schema({
 });
 
 valorCuotaSchema.methods.toJSON = function () {
-  const { _id, __v, ...valor } = this.toObject();
+  const { __v, ...valor } = this.toObject();
   return valor;
 };
 

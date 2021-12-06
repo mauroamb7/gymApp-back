@@ -24,6 +24,24 @@ const agregarActividad = async (req = request, res = response) => {
   } catch (error) {}
 };
 
+const listarActividades = async (req, res) => {
+  try {
+    const actividades = await Actividad.find({});
+
+    if (!actividades) {
+      res.status(400).json({
+        ok: false,
+        msg: "No se encontro ninguna actividad",
+      });
+    }
+
+    res.json({
+      actividades,
+    });
+  } catch (error) {}
+};
+
 module.exports = {
   agregarActividad,
+  listarActividades,
 };

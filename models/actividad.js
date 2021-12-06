@@ -10,4 +10,9 @@ const actividadSchema = new Schema({
   },
 });
 
+actividadSchema.methods.toJSON = function () {
+  const { __v, ...actividad } = this.toObject();
+  return actividad;
+};
+
 module.exports = model("Actividad", actividadSchema);

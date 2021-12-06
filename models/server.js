@@ -9,10 +9,12 @@ class Server {
     this.port = process.env.PORT;
 
     //paths de las rutas
-    this.authPath = "/api/auth";
-    this.usersPath = "/api/user";
-    this.valorCuotaPath = "/api/valorCuota";
-    this.actividad = "/api/actividad";
+    this.paths = {
+      auth: "/api/auth",
+      user: "/api/user",
+      valorCuota: "/api/valorCuota",
+      actividad: "/api/actividad",
+    };
 
     //DB connection
     this.database();
@@ -41,10 +43,10 @@ class Server {
   }
 
   routes() {
-    this.app.use(this.authPath, require("../routes/auth"));
-    this.app.use(this.usersPath, require("../routes/user"));
-    this.app.use(this.valorCuotaPath, require("../routes/valorCuotaRoute"));
-    this.app.use(this.actividad, require("../routes/actividadRoute"));
+    this.app.use(this.paths.auth, require("../routes/auth"));
+    this.app.use(this.paths.user, require("../routes/user"));
+    this.app.use(this.paths.valorCuota, require("../routes/valorCuotaRoute"));
+    this.app.use(this.paths.actividad, require("../routes/actividadRoute"));
   }
 
   async database() {
